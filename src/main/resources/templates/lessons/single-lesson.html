@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/base.html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div layout:fragment="content">
+    <div class="show-course">
+        <a id="back-to-courses" th:href="@{'/courses'}"><i class='bx bx-left-arrow-alt' ></i> Курсы</a>
+
+        <div style="display: flex; justify-content: center;">
+            <div class="course-info">
+                <h1 th:text="${lesson.getName()}"></h1>
+
+                <div class="about-course">
+                    <iframe style="width: 100%" th:src="${lesson.getVideo()}" height="400" frameborder="0"></iframe>
+                    <p th:utext="${lesson.getDescription()}"></p>
+                </div>
+            </div>
+
+            <div class="lessons-list">
+                <h2>Все уроки</h2>
+                <div class="lesson" th:each="lesson, index : ${lessons}" th:if="${lessons != null}">
+                    <div class="isDone">
+                        <i class='bx bx-minus' ></i>
+                    </div>
+                    <span th:text="${index.count}"></span>
+                    <a style="color: #fff" th:href="@{'/lessons/' + ${lesson.id}}"><h3 style="margin: 0; padding: 0;" th:text="${lesson.getName()}"></h3></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>

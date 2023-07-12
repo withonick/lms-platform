@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/base.html"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div layout:fragment="content">
+    <div class="show-course">
+        <a id="back-to-courses" th:href="@{'/courses'}"><i class='bx bx-left-arrow-alt' ></i> Курсы</a>
+
+        <div style="display: flex; justify-content: center;">
+            <div class="course-info">
+                <h1 th:text="${course.getName()}"></h1>
+
+                <div class="course-details">
+                    <div class="course-details_">
+                        <i class='bx bxs-videos' ></i><span th:text="${course.getLessons().size() + ' Уроки'}"></span>
+                    </div>
+                    <h2 th:text="${course.getLessons()}"></h2>
+                    <div class="course-details_">
+                        <i class='bx bx-calendar' ></i><span th:text="${course.getCreatedAt().getMonth() + ' ' + course.getCreatedAt().getYear()}"></span>
+                    </div>
+                    <div class="course-details_">
+                        <i class='bx bx-purchase-tag-alt' ></i><span>Laravel 9</span>
+                    </div>
+                </div>
+
+                <div class="about-course">
+                    <h2>О курсе </h2>
+
+                    <p th:utext="${course.getDescription()}"></p>
+                </div>
+            </div>
+
+            <div class="lessons-list">
+                <h2>Все уроки</h2>
+                <div th:if="${lessons == null or #lists.isEmpty(lessons)}">
+                    <h3>Уроков пока нет</h3>
+                    <form th:action="@{'/lessons/store'}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')" method="post" enctype="multipart/form-data">
+                        <input type="text" name="name" placeholder="Название урока" class="form-control">
+                        <input type="text" name="video" placeholder="Video Url (Youtube)">
+                        <textarea name="description" id="inp_editor1"></textarea>
+                        <input type="hidden" name="course_id" th:value="${course.getId()}">
+                        <input type="submit" value="Добавить урок" class="btn btn-primary">
+                    </form>
+                </div>
+
+                <div class="lesson" th:each="lesson, index : ${lessons}" th:if="${lessons != null}">
+                    <div class="isDone">
+                        <i class='bx bx-minus' ></i>
+                    </div>
+                    <span th:text="${index.count}"></span>
+                    <a style="color: #fff" th:href="@{'/lessons/' + ${lesson.id}}"><h3 style="margin: 0; padding: 0;" th:text="${lesson.getName()}"></h3></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>

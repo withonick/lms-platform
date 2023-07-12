@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/base.html">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+      <div layout:fragment="header-title">
+            <h1>Все доступные курсы</h1>
+      </div>
+
+<div layout:fragment="content">
+    <div class="courses-list" style="background-color: #0E2A47; color: #fff;">
+        <h1>Популярные курсы</h1>
+        <div class="courses-row">
+            <div class="single-course" th:each="course:${courses}">
+                <div class="single-course-image">
+                    <img th:src="${course.loadImage()}" alt="hehe">
+                    <input type="hidden" th:value="${course.id}">
+                </div>
+                <div class="single-course-info">
+                    <div class="single-course-title">
+                        <a th:href="@{'/courses/'+${course.id}}" th:text="${course.getName()}"></a>
+                    </div>
+                    <div class="single-course__">
+                        <span th:text="${course.getLessons().size()} + ' lessons'"><i class='bx bxs-videos'></i></span>
+                        <span><i class='bx bx-time' ></i> 2h 19m</span>
+                        <span th:text="${course.getCreatedAt().getMonth() + ' ' + course.getCreatedAt().getYear()}"><i class='bx bxs-videos'></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        <h1>Новые курсы</h1>-->
+<!--        <div class="courses-row">-->
+<!--            <div class="single-course">-->
+<!--                <div class="single-course-image">-->
+<!--                    <img src="course.jpg" alt="hehe">-->
+<!--                </div>-->
+<!--                <div class="single-course-info">-->
+<!--                    <div class="single-course-title">-->
+<!--                        <h2>How to be sigma</h2>-->
+<!--                    </div>-->
+<!--                    <div class="single-course__">-->
+<!--                        <span><i class='bx bxs-videos'></i> 30 lessons</span>-->
+<!--                        <span><i class='bx bx-time' ></i> 2h 19m</span>-->
+<!--                        <span><i class='bx bxs-videos'></i> 30 lessons</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="single-course">-->
+<!--                <div class="single-course-image">-->
+<!--                    <img src="course.jpg" alt="hehe">-->
+<!--                </div>-->
+<!--                <div class="single-course-info">-->
+<!--                    <div class="single-course-title">-->
+<!--                        <h2>How to be sigma</h2>-->
+<!--                    </div>-->
+<!--                    <div class="single-course__">-->
+<!--                        <span><i class='bx bxs-videos'></i> 30 lessons</span>-->
+<!--                        <span><i class='bx bx-time' ></i> 2h 19m</span>-->
+<!--                        <span><i class='bx bxs-videos'></i> 30 lessons</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="single-course">-->
+<!--                <div class="single-course-image">-->
+<!--                    <img src="course.jpg" alt="hehe">-->
+<!--                </div>-->
+<!--                <div class="single-course-info">-->
+<!--                    <div class="single-course-title">-->
+<!--                        <h2>How to be sigma</h2>-->
+<!--                    </div>-->
+<!--                    <div class="single-course__">-->
+<!--                        <span><i class='bx bxs-videos'></i> 30 lessons</span>-->
+<!--                        <span><i class='bx bx-time' ></i> 2h 19m</span>-->
+<!--                        <span><i class='bx bxs-videos'></i> 30 lessons</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+
+
+
+<!--    <div th:each="course:${courses}">-->
+<!--        <img th:src="${course.getImage()}" alt="">-->
+<!--        <h1 th:text="${course.getName()}"></h1>-->
+<!--        <p th:utext="${course.getDescription()}"></p>-->
+<!--        <h3 th:text="${course.getIsPremium()}"></h3>-->
+
+<!--        <a th:href="@{'/courses/'+${course.id}+'/edit'}">Edit</a>-->
+<!--    </div>-->
+</div>
+</html>

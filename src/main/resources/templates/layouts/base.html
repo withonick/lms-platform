@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{'/css/style.css'}">
+    <link rel="stylesheet" th:href="@{'/richtexteditor/rte_theme_default.css'}" />
+
+    <link th:href="@{'https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'}" rel='stylesheet'>
+
+    <script type="text/javascript" th:src="@{'/richtexteditor/rte.js'}"></script>
+    <script type="text/javascript" th:src="@{'/richtexteditor/plugins/all_plugins.js'}"></script>
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav-logo">
+            <i class='bx bxl-redux'></i>
+            <a href="#">Eduverse</a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a th:href="@{'/courses'}">Курсы</a></li>
+            <li><a th:href="@{'/tutorials'}">Премиум туториалы</a></li>
+            <li><a th:href="@{'/about'}">О нас</a></li>
+            <li><a th:href="@{'/price'}">Цены</a></li>
+        </ul>
+
+        <div class="nav-auth">
+            <div class="nav-search">
+                <i class='bx bx-search' ></i>
+                <button class="nav-search-btn cd-popup-trigger">Поиск</button>
+
+                <div class="cd-popup" role="alert">
+                    <div class="cd-popup-container">
+                        <input type="text" placeholder="Поиск курсов, материалов и т.д">
+                    </div>
+                </div>
+
+            </div>
+            <a sec:authorize="isAnonymous()" th:href="@{'/sign-in'}" class="nav-auth-btn">Присоединиться</a>
+
+            <details sec:authorize="isAuthenticated()" class="dropdown">
+                <summary role="button">
+                    <a class="button">Click on me!</a>
+                </summary>
+                <ul>
+                    <li><a href="#">I'm a dropdown.</a></li>
+                    <li><a href="#">In Pure CSS</a></li>
+                    <li><a href="#">As in...</a></li>
+                    <li><a href="#">No JavaScript.</a></li>
+                    <li><a href="#">At All.</a></li>
+                </ul>
+            </details>
+
+        </div>
+    </nav>
+
+    <div class="header-title-bar" layout:fragment="header-title">
+
+    </div>
+</header>
+
+<div layout:fragment="content">
+
+</div>
+
+<script
+        th:src="@{'https://code.jquery.com/jquery-3.7.0.js'}"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+        crossorigin="anonymous"></script>
+<script th:src="@{'/js/script.js'}"></script>
+
+</body>
+</html>
