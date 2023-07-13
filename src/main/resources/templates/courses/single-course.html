@@ -14,14 +14,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
                 <div class="course-details">
                     <div class="course-details_">
-                        <i class='bx bxs-videos' ></i><span th:text="${course.getLessons().size() + ' Уроки'}"></span>
-                    </div>
-                    <h2 th:text="${course.getLessons()}"></h2>
-                    <div class="course-details_">
-                        <i class='bx bx-calendar' ></i><span th:text="${course.getCreatedAt().getMonth() + ' ' + course.getCreatedAt().getYear()}"></span>
+                        <i class='bx bxs-videos' ></i><span style="color: #fff" th:text="${course.getLessons().size() + ' Уроки'}"></span>
                     </div>
                     <div class="course-details_">
-                        <i class='bx bx-purchase-tag-alt' ></i><span>Laravel 9</span>
+                        <i class='bx bx-calendar' ></i><span style="color: #fff" th:text="${course.getCreatedAt().getMonth() + ' ' + course.getCreatedAt().getYear()}"></span>
                     </div>
                 </div>
 
@@ -36,13 +32,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                 <h2>Все уроки</h2>
                 <div th:if="${lessons == null or #lists.isEmpty(lessons)}">
                     <h3>Уроков пока нет</h3>
-                    <form th:action="@{'/lessons/store'}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')" method="post" enctype="multipart/form-data">
-                        <input type="text" name="name" placeholder="Название урока" class="form-control">
-                        <input type="text" name="video" placeholder="Video Url (Youtube)">
-                        <textarea name="description" id="inp_editor1"></textarea>
-                        <input type="hidden" name="course_id" th:value="${course.getId()}">
-                        <input type="submit" value="Добавить урок" class="btn btn-primary">
-                    </form>
                 </div>
 
                 <div class="lesson" th:each="lesson, index : ${lessons}" th:if="${lessons != null}">

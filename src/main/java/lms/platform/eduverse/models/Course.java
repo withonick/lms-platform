@@ -24,7 +24,7 @@ public class Course extends BaseModel{
     @Column(name = "image")
     private String image;
 
-    @Column(name = "rating")
+    @Column(name = "rating", columnDefinition = "DOUBLE DEFAULT 0.0")
     private Double rating;
 
     @Column(name = "is_active")

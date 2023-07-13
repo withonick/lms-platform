@@ -1,5 +1,8 @@
 package lms.platform.eduverse.services;
 
+import lms.platform.eduverse.dto.CourseDTO;
+import lms.platform.eduverse.dto.UserDTO;
+import lms.platform.eduverse.mapper.CourseMapper;
 import lms.platform.eduverse.models.Course;
 import lms.platform.eduverse.models.User;
 import lms.platform.eduverse.repositories.CourseRepository;
@@ -13,6 +16,9 @@ public class CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private CourseMapper courseMapper;
 
     public boolean isCourseCreator(Long id, User user) {
         Course course = courseRepository.findById(id).orElse(null);
@@ -37,6 +43,11 @@ public class CourseService {
 
     public void deleteCourseById(Long id) {
         courseRepository.deleteById(id);
+    }
+
+
+    public List<CourseDTO> getAllCoursesDTO() {
+        return courseMapper.toCourseDTOList(courseRepository.findAll());
     }
 
 }

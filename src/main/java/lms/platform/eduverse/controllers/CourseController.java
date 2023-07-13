@@ -84,15 +84,24 @@ public class CourseController {
         }
     }
 
-    @PreAuthorize("isAuthenticated() and @userService.isUserPremium(authentication) or hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER') or @courseService.isCourseCreator(#id, authentication.principal)")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public String course(@PathVariable Long id, Model model) throws NoHandlerFoundException {
         if (courseService.getCourseById(id) != null) {
             Course course = courseService.getCourseById(id);
-            List<Lesson> lessons = lessonService.getLessonsByCourseId(id);
-            model.addAttribute("course", course);
-            model.addAttribute("lessons", lessons);
-            return "courses/single-course";
+            if (course.getIsPremium()){
+                if (userService.getCurrentSessionUser().getIsPremium()) {
+                    model.addAttribute("course", course);
+                    model.addAttribute("lessons", lessonService.getLessonsByCourseId(id));
+                    return "courses/single-course";
+                } else {
+                    return "redirect:/courses?premium-course";
+                }
+            } else {
+                model.addAttribute("lessons", lessonService.getLessonsByCourseId(id));
+                model.addAttribute("course", course);
+                return "courses/single-course";
+            }
         } else {
             throw new NoHandlerFoundException("GET", "/courses/" + id, null);
         }

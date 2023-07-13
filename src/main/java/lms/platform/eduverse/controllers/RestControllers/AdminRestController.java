@@ -1,5 +1,6 @@
 package lms.platform.eduverse.controllers.RestControllers;
 
+import lms.platform.eduverse.dto.CourseDTO;
 import lms.platform.eduverse.dto.UserDTO;
 import lms.platform.eduverse.services.CourseService;
 import lms.platform.eduverse.services.TutorialService;
@@ -26,6 +27,11 @@ public class AdminRestController {
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsersDTO());
+    }
+
+    @GetMapping("/courses")
+    public ResponseEntity<List<CourseDTO>> getAllCourses() {
+        return ResponseEntity.ok(courseService.getAllCoursesDTO());
     }
 
 }
