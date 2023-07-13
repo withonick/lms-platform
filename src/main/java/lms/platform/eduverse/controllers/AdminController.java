@@ -53,7 +53,7 @@ public class AdminController {
     }
 
     @PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/courses/{id}/edit")
+    @GetMapping("/courses/edit/{id}")
     public String editCourse(@PathVariable(name = "id") Long id, Model model) throws NoHandlerFoundException {
         if (courseService.getCourseById(id) != null) {
             model.addAttribute("course", courseService.getCourseById(id));

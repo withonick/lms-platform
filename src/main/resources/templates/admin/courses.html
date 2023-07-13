@@ -53,6 +53,7 @@
                 let table_data_values = "";
                 for (let i = 0; i < courses.length; i++) {
                     const course = courses[i];
+                    const url = "@{/admin/course/{id}/edit(id=${course.id})}"
                     let premium = course.isPremium ? "<span class=\"badge bg-label-warning me-1\">Premium</span>" : "<span class=\"badge bg-label-primary me-1\">No Premium</span>";
                     table_data_values += "<tr>" +
                         "<td>"+ i +"</td>" +
@@ -65,7 +66,7 @@
                         "<i class=\"bx bx-dots-vertical-rounded\"></i>" +
                         "</button>" +
                         "<div class=\"dropdown-menu\">" +
-                        "<a th:href=\"@{/admin/course/{id}/edit(id=${course.id})}\" class=\"dropdown-item\"" +
+                        "<a th:href="+ url +" class=\"dropdown-item\"" +
                         "><i class=\"bx bx-edit-alt me-1\"></i> Редактировать</a" +
                         ">" +
                         "<a onclick=\"showDeleteModal(" + course.id + ")\" class=\"dropdown-item\" " +
