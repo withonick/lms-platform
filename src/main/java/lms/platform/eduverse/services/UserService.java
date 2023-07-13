@@ -1,5 +1,7 @@
 package lms.platform.eduverse.services;
 
+import lms.platform.eduverse.dto.UserDTO;
+import lms.platform.eduverse.mapper.UserMapper;
 import lms.platform.eduverse.models.Permission;
 import lms.platform.eduverse.models.User;
 import lms.platform.eduverse.repositories.PermissionRepository;
@@ -26,6 +28,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PermissionService permissionService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -71,6 +76,10 @@ public class UserService implements UserDetailsService {
     public boolean isUserPremium(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return user.getIsPremium();
+    }
+
+    public List<UserDTO> getAllUsersDTO() {
+        return userMapper.toUserDTOList(userRepository.findAll());
     }
 
 }

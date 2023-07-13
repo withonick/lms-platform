@@ -79,7 +79,7 @@ public class User extends BaseModel implements UserDetails {
 
     public String loadUserAvatar(){
         if(avatar == null || avatar.isEmpty()){
-            return "/defaults/default.png";
+            return "/defaults/default-user.png";
         }
         return avatar;
     }
