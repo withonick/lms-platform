@@ -44,16 +44,14 @@
             </div>
             <a sec:authorize="isAnonymous()" th:href="@{'/sign-in'}" class="nav-auth-btn">Присоединиться</a>
 
-            <details sec:authorize="isAuthenticated()" class="dropdown">
+            <details sec:authorize="isAuthenticated()" class="dropdown" style="margin-left: 10px; color: #fff; outline: none">
                 <summary role="button">
-                    <a class="button">Click on me!</a>
+                    <a class="button" th:text="${#authentication.principal.username}" style="cursor:pointer; color:#CBD5E1;"></a>
                 </summary>
                 <ul>
-                    <li><a href="#">I'm a dropdown.</a></li>
-                    <li><a href="#">In Pure CSS</a></li>
-                    <li><a href="#">As in...</a></li>
-                    <li><a href="#">No JavaScript.</a></li>
-                    <li><a href="#">At All.</a></li>
+                    <li><a th:href="@{'/profile'}">Профиль</a></li>
+                    <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a th:href="@{'/admin'}">Панель управление</a></li>
+                    <li><a href="#logout-modal">Выйти</a></li>
                 </ul>
             </details>
 
@@ -67,6 +65,29 @@
 
 <div layout:fragment="content">
 
+</div>
+
+
+
+
+<!-- Modal -->
+
+<div id="logout-modal" class="logout-modal">
+    <div class="logout__modal__content">
+        <h1>Выйти</h1>
+
+        <p>
+            Вы уверены что хотите выйти?
+        </p>
+
+        <div class="logout__modal__footer">
+            <form th:action="@{'/logout'}" method="post">
+                <button type="submit">Выйти</button>
+            </form>
+        </div>
+
+        <a href="#" class="logout__modal__close">&times;</a>
+    </div>
 </div>
 
 <script

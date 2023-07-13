@@ -12,7 +12,7 @@ public interface CourseMapper {
 
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "updatedAt", target = "updatedAt")
-    CourseDTO toCourseDTO(CourseDTO courseDTO);
+    CourseDTO toCourseDTO(Course course);
 
     CourseDTO toEntityCourse(CourseDTO courseDTO);
 

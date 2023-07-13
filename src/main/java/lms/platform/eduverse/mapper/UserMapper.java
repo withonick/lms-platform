@@ -12,7 +12,7 @@ public interface UserMapper {
 
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "updatedAt", target = "updatedAt")
-    UserDTO toUserDTO(UserDTO userDTO);
+    UserDTO toUserDTO(User user);
 
     User toEntityUser(UserDTO userDTO);
 

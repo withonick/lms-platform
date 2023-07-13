@@ -2,9 +2,43 @@
 <html lang="en"
       xmlns:th = "http://www.thymeleaf.org"
       xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/base.html">
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <div layout:fragment="content">
-        <h1 th:></h1>
+<div layout:fragment="header-title">
+    <h1 th:text="${user.getUsername()}"></h1>
+</div>
+
+<div layout:fragment="content">
+    <div class="profile-page">
+        <div class="image-bar">
+            <div class="profile-image">
+                <img th:src="${user.loadUserAvatar()}" alt="">
+            </div>
+
+            <div class="image-bar-info">
+                <h2 th:text="${user.getFirstName() + ' ' + user.getLastName()}"></h2>
+                <span th:text="${user.getEmail()}"></span>
+            </div>
+        </div>
+
+        <form class="profile-info" th:action="@{'/user/update'}" method="post" enctype="multipart/form-data">
+            <label>Имя</label>
+            <input type="text" name="firstname" placeholder="Введите имя" th:value="${user.getFirstName()}">
+            <label>Фамилия</label>
+            <input type="text" name="lastname" placeholder="Введите имя" th:value="${user.getLastName()}">
+            <label>Имя пользователя</label>
+            <input type="text" name="username" placeholder="Введите имя" th:value="${user.getUsername()}">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Введите имя" th:value="${user.getEmail()}">
+            <label>Статус</label>
+            <input type="text" disabled th:value="${user.getIsPremium() ? 'PREMIUM' : 'NO PREMIUM'}">
+            <label>Изображение</label>
+            <input type="file" name="image">
+
+            <button>Сохранить</button>
+        </form>
     </div>
-
+</div>
+</div>
+</div>
 </html>

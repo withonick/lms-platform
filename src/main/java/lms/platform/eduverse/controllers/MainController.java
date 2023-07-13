@@ -4,7 +4,9 @@ import lms.platform.eduverse.models.User;
 import lms.platform.eduverse.services.PermissionService;
 import lms.platform.eduverse.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,8 +66,10 @@ public class MainController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
-    public String profile(){
+    public String profile(Model model){
+        model.addAttribute("user", userService.getCurrentSessionUser());
         return "profile";
     }
 

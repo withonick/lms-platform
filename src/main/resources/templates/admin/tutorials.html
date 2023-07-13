@@ -14,7 +14,7 @@
                     data-bs-toggle="modal"
                     data-bs-target="#createCourse"
             >
-                Добавить курс
+                Добавить туториал
             </button>
         </div>
         <h5 class="card-header">Все курсы</h5>
@@ -68,8 +68,8 @@
                         "<a class=\"dropdown-item\" href=\"javascript:void(0);\"" +
                         "><i class=\"bx bx-edit-alt me-1\"></i> Редактировать</a" +
                         ">" +
-                        "<a onclick=\"showDeleteModal(" + course.id + ")\" class=\"dropdown-item\" " +
-                        "><i class=\"bx bx-trash me-1\"></i> Удалить</a" +
+                        "<a class=\"dropdown-item\" href=\"javascript:void(0);\"" +
+                        "><i class=\"bx bx-trash me-1\"></i> Delete</a" +
                         ">" +
                         "</div>" +
                         "</div>" + "</td>"
@@ -107,7 +107,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="nameBasic" class="form-label">Название курса</label>
+                            <label for="nameBasic" class="form-label">Название туториала</label>
                             <input type="text" name="name" id="nameBasic" class="form-control" placeholder="Введите название" />
                         </div>
                     </div>
@@ -124,81 +124,17 @@
                             <input type="file" name="image" id="dobBasic" class="form-control" />
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col mb-3">
-                            <div class="input-group">
-                                <div class="input-group-text">
-                                    <input
-                                            name="isPremium"
-                                            class="form-check-input mt-0"
-                                            type="checkbox"
-                                            aria-label="Checkbox for following text input"
-                                    />
-                                </div>
-                                <input type="text" class="form-control" value="Премуим" disabled />
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                        Close
+                        Отмена
                     </button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Добавить</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
-
-
-
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Удалить курс</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Вы уверены, что хотите удалить этот курс?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">Да</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Отображение модального окна с подтверждением удаления курса
-        function showDeleteModal(courseId) {
-            $('#deleteModal').data('course-id', courseId);
-            $('#deleteModal').modal('show');
-        }
-
-        // Обработка нажатия на кнопку "Да" в модальном окне
-        $('#confirmDelete').click(function() {
-            const courseId = $('#deleteModal').data('course-id');
-            // Получаем ID курса из атрибута модального окна
-
-            // Отправляем AJAX-запрос на сервер для удаления курса
-            $.ajax({
-                url: '/api/courses/' + courseId,
-                type: 'DELETE',
-                success: function(result) {
-                    // Закрываем модальное окно
-                    $('#deleteModal').modal('hide');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Ошибка удаления курса:', textStatus, errorThrown);
-                }
-            });
-        });
-    </script>
-
     <script th:src="@{'/js/script.js'}"></script>
 
 </div>
