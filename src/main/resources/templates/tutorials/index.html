@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"
       xmlns:th = "http://www.thymeleaf.org"
-      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/base.html">
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/base.html"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div layout:fragment="header-title">
@@ -9,26 +9,55 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 </div>
 
 <div layout:fragment="content">
-    <div class="courses-list" style="background-color: #0E2A47; color: #fff;">
-        <h1>Премиум туториалы</h1>
-        <div class="courses-row">
-            <div class="single-course" th:each="tutorial:${tutorials}">
-                <div class="single-course-image">
-                    <img th:src="${tutorial.loadImage()}" alt="hehe">
+    <div style="display: flex;">
+        <div class="tutorial-list">
+            <h2 style="margin: 0; color: #64748B;">Премиум туториалы</h2>
+            <p>Эти туториалы доступны только премиум пользотвалеям</p>
+            <div th:if="${tutorials == null or #lists.isEmpty(tutorials)}">
+                <h2>Нет доступных туториалов</h2>
+
+                <form sec:authorize="hasAnyRole('ROLE_ADMIN')" th:action="@{'/tutorials/store'}" method="post" enctype="multipart/form-data">
+                    <input type="text" name="name" placeholder="Название туториала">
+                    <textarea name="description" id="inp_editor1" cols="30" rows="10"></textarea>
+                    <input type="file" name="image">
+                    <input type="submit" value="Добавить туториал">
+                </form>
+            </div>
+
+            <div class="single-tutorial" th:if="${tutorials != null}" th:each="tutorial:${tutorials}">
+                <div class="single-tutorial-image">
+                    <img th:src="${tutorial.loadImage()}" alt="">
                 </div>
-                <div class="single-course-info">
-                    <div class="single-course-title">
-                        <a th:href="@{'/tutorial/'+${tutorial.id}}" th:text="${tutorial.getName()}"></a>
+
+                <div class="single-tutorial-info">
+                    <div class="single-tutorial-detail">
+                        <p th:text="${tutorial.getCreatedAt().getMonth() + ' ' + tutorial.getCreatedAt().getYear()}"></p>
+                        <div style="display: flex; align-items: center; margin-left: 20px; font-size: 18px; font-weight: bold;">
+                            <i class='bx bxs-star' style="color: gold;"></i><span style="color: #60A5FA;">PREMIUM</span>
+                        </div>
                     </div>
-                    <div class="single-course__">
-                        <span th:text="${tutorial.getLessons().size()} + ' lessons'"><i class='bx bxs-videos'></i></span>
-                        <span><i class='bx bx-time' ></i> 2h 1m</span>
-                        <span th:text="${tutorial.getCreatedAt().getMonth() + ' ' + course.getCreatedAt().getYear()}"><i class='bx bxs-videos'></i></span>
+
+                    <div class="single-tutorial-title">
+                        <a th:href="@{'/tutorials/' + ${tutorial.id}}" style="color: #000000"><h2 style="margin: 0;" th:text="${tutorial.getName()}"></h2></a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="other-courses">
+            <h2>Другие курсы</h2>
+
+            <div class="other-single-course" th:each="course:${courses}">
+                <div class="other-single-course-image">
+                    <img th:src="${course.loadImage()}" alt="">
+                </div>
+                <div class="other-single-course-info">
+                    <a th:href="@{'/courses' + ${course.id}}" style="color: #000000"><h4 th:text="${course.getName()}"></h4></a>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
 
 </div>

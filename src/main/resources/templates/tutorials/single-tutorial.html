@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/base.html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div layout:fragment="header-title">
+    <h1 th:text="${tutorial.getName()}"></h1>
+</div>
+
+<div layout:fragment="content">
+    <div class="tutorial-details" style="text-align: center">
+        <p th:utext="${tutorial.getDescription()}"></p>
+    </div>
+</div>
+</html>

@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashSet;
+import java.util.List;
 
 public class UserService implements UserDetailsService {
 
@@ -37,6 +38,10 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
 
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 
     public User addUser(User user){

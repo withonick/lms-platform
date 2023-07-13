@@ -1,11 +1,8 @@
 package lms.platform.eduverse.services;
 
-import lms.platform.eduverse.dto.CourseDTO;
-import lms.platform.eduverse.mapper.CourseMapper;
 import lms.platform.eduverse.models.Course;
 import lms.platform.eduverse.models.User;
 import lms.platform.eduverse.repositories.CourseRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +13,6 @@ public class CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
-
-    @Autowired
-    private CourseMapper courseMapper;
 
     public boolean isCourseCreator(Long id, User user) {
         Course course = courseRepository.findById(id).orElse(null);
