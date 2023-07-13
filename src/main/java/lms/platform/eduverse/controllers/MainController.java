@@ -25,11 +25,13 @@ public class MainController {
         return "index";
     }
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/sign-in")
     public String signIn(){
         return "auth/login";
     }
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/sign-up")
     public String signUp(){
         return "auth/register";
@@ -38,11 +40,10 @@ public class MainController {
     @PostMapping("/to-sign-up")
     public String toSignUp(@RequestParam(name = "user_firstname") String firstName,
                            @RequestParam(name = "user_lastname") String lastName,
-                           @RequestParam(name = "user_lastname") String username,
+                           @RequestParam(name = "user_username") String username,
                            @RequestParam(name = "user_email") String email,
                            @RequestParam(name = "user_password") String password,
-                           @RequestParam(name = "user_repeat_password") String repeat_password
-                           ){
+                           @RequestParam(name = "user_repeat_password") String repeat_password){
         if (password.equals(repeat_password)){
             User user = new User();
             user.setFirstName(firstName);
@@ -51,6 +52,7 @@ public class MainController {
             user.setEmail(email);
             user.setIsPremium(false);
             user.setPassword(password);
+            user.setIsBanned(false);
             User newUser = userService.addUser(user);
 
             if (newUser != null){

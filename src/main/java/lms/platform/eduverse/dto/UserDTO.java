@@ -19,6 +19,7 @@ public class UserDTO {
     private String email;
     private String avatar;
     private Boolean isPremium;
+    private Boolean isBanned;
 
     public String getAvatar() {
         if (avatar == null){

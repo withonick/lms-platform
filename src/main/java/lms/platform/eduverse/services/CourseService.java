@@ -20,11 +20,6 @@ public class CourseService {
     @Autowired
     private CourseMapper courseMapper;
 
-    public boolean isCourseCreator(Long id, User user) {
-        Course course = courseRepository.findById(id).orElse(null);
-        return course != null && course.getUser().equals(user) && course.getIsPremium();
-    }
-
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }

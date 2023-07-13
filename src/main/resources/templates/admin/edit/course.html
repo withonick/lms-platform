@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/admin.html">
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div layout:fragment="content">
+    <form th:action="@{'/courses/update'}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:value="${course.id}" name="course_id">
+
+        <div class="row">
+            <div class="col mb-3">
+                <label for="nameBasic" class="form-label">Название курса</label>
+                <input type="text" name="name" id="nameBasic" th:value="${course.getName()}" class="form-control" placeholder="Введите название" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <label for="description" class="form-label">Описание</label>
+                <textarea name="description" class="form-control" id="inp_editor1" style="width: 100%" th:text="${course.getDescription()}"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-3">
+                <label for="dobBasic" class="form-label">Изображение</label>
+                <input type="file" name="image" id="dobBasic" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-3">
+                <div class="input-group">
+                    <div class="input-group-text">
+                        <input
+                                name="isPremium"
+                                class="form-check-input mt-0"
+                                type="checkbox"
+                                aria-label="Checkbox for following text input"
+                                th:if="${course.isPremium()}"
+                                checked
+                        />
+                    </div>
+                    <input type="text" class="form-control" value="Премуим" disabled />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <button class="btn btn-primary">Обновить</button>
+            </div>
+        </div>
+    </form>
+</div>
+</html>

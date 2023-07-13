@@ -40,19 +40,6 @@ public class CourseController {
         return "courses/index";
     }
 
-    @GetMapping("/premium")
-    public String premiumCourses(Model model) {
-        model.addAttribute("courses", courseService.getAllPremiumCourses());
-        return "courses/premium";
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/create")
-    public String addCourse(Model model) {
-        model.addAttribute("course", new Course());
-        return "courses/create";
-    }
-
     @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
     @PostMapping("/store")
     public String addCourse(@RequestParam(name = "name") String name,
@@ -70,7 +57,6 @@ public class CourseController {
             }
 
             course.setIsPremium(isPremium);
-            course.setUser(userService.getCurrentSessionUser());
             Course newCourse = courseService.saveCourse(course);
 
             if (newCourse != null) {
@@ -107,26 +93,36 @@ public class CourseController {
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{id}/edit")
-    public String editCourse(@PathVariable(name = "id") Long id, Model model) throws NoHandlerFoundException {
-        if (courseService.getCourseById(id) != null) {
-            model.addAttribute("course", courseService.getCourseById(id));
-            return "courses/edit";
-        } else {
-            throw new NoHandlerFoundException("GET", "/courses/" + id + "/edit", null);
+
+    @PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/update")
+    public String updateCourse(@RequestParam(name = "course_id") Long id,
+                               @RequestParam(name = "name") String name,
+                               @RequestParam(name = "description") String description,
+                               @RequestParam(name = "image") MultipartFile image,
+                               @RequestParam(name = "isPremium", defaultValue = "false") boolean isPremium) {
+        try {
+            Course course = courseService.getCourseById(id);
+            course.setName(name);
+            course.setDescription(description);
+            course.setIsPremium(isPremium);
+
+            if (!image.isEmpty()) {
+                String fileName = fileStorageService.saveFile(image, coursesImagesPath);
+                course.setImage(fileName);
+            }
+
+            Course updatedCourse = courseService.saveCourse(course);
+
+            if (updatedCourse != null) {
+                return "redirect:/courses?success";
+            } else {
+                return "redirect:/courses?error";
+            }
+
+        } catch (IOException e) {
+            return "redirect:/error?error";
         }
     }
 
-
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/{id}/delete")
-    public String deleteCourse(@RequestParam(name = "id") Long id) throws NoHandlerFoundException {
-        if (courseService.getCourseById(id) != null) {
-            courseService.deleteCourseById(id);
-            return "redirect:/courses";
-        } else {
-            throw new NoHandlerFoundException("GET", "/courses/" + id + "/delete", null);
-        }
-    }
 }

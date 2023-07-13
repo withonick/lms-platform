@@ -8,7 +8,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,5 +50,16 @@ public class AdminController {
     public String courses(Model model) {
         model.addAttribute("courses", courseService.getAllCourses());
         return "admin/courses";
+    }
+
+    @PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/courses/{id}/edit")
+    public String editCourse(@PathVariable(name = "id") Long id, Model model) throws NoHandlerFoundException {
+        if (courseService.getCourseById(id) != null) {
+            model.addAttribute("course", courseService.getCourseById(id));
+            return "admin/edit/course";
+        } else {
+            throw new NoHandlerFoundException("GET", "/courses/" + id + "/edit", null);
+        }
     }
 }

@@ -5,9 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "t_courses")
@@ -24,7 +22,7 @@ public class Course extends BaseModel{
     @Column(name = "image")
     private String image;
 
-    @Column(name = "rating", columnDefinition = "DOUBLE DEFAULT 0.0")
+    @Column(name = "rating")
     private Double rating;
 
     @Column(name = "is_active")
@@ -33,14 +31,10 @@ public class Course extends BaseModel{
     @Column(name = "is_premium")
     private Boolean isPremium;
 
-    @ManyToOne
-    private User user;
 
     @OneToMany
-    private Set<Lesson> lessons = new HashSet<>();
+    private List<Lesson> lessons;
 
-    @ManyToMany
-    private List<User> users;
 
     public String loadImage(){
         if (image == null || image.isEmpty()) {

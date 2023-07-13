@@ -38,6 +38,9 @@ public class User extends BaseModel implements UserDetails {
     @Column(name = "is_premium")
     private Boolean isPremium;
 
+    @Column(name = "is_banned")
+    private Boolean isBanned;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Permission> permissions = new HashSet<>();

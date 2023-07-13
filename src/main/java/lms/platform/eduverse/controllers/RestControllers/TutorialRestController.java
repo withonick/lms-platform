@@ -17,6 +17,7 @@ public class TutorialRestController {
 
     private final TutorialService tutorialService;
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<CourseDTO> deleteCourse(@PathVariable("id") Long tutorialId) {
         try {

@@ -30,7 +30,7 @@ public class LessonController {
 
     private final FileStorageService fileStorageService;
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
     @PostMapping("/store")
     public String addLesson(@RequestParam(name = "name") String name,
                               @RequestParam(name = "description") String description,
@@ -61,6 +61,7 @@ public class LessonController {
         return "redirect:/courses";
     }
 
+    @PreAuthorize("isAuthenticated() and @userService.isUserPremium(authentication) or hasRole('ROLE_ADMIN')")
     @GetMapping("{id}")
     public String getLesson(@PathVariable Long id, Model model) {
         Lesson lesson = lessonService.getLessonById(id);

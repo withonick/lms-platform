@@ -52,14 +52,14 @@
                 <div class="formbg">
                     <div class="formbg-inner padding-horizontal--48">
                         <span class="padding-bottom--15">Регистрация</span>
-                        <form th:action="@{'/auth'}" method="post" id="stripe-login">
+                        <form th:action="@{'/to-sign-up'}" method="post" id="stripe-login">
                             <div class="field padding-bottom--24">
                                 <label for="email">Имя</label>
-                                <input type="email" name="user_firstname">
+                                <input type="text" name="user_firstname">
                             </div>
                             <div class="field padding-bottom--24">
                                 <label for="email">Фамилия</label>
-                                <input type="email" name="user_lastname">
+                                <input type="text" name="user_lastname">
                             </div>
                             <div class="field padding-bottom--24">
                                 <label for="email">Email</label>
@@ -67,7 +67,7 @@
                             </div>
                             <div class="field padding-bottom--24">
                                 <label for="email">Имя пользователя</label>
-                                <input type="email" name="user_username">
+                                <input type="text" name="user_username">
                             </div>
                             <div class="field padding-bottom--24">
                                 <div class="grid--50-50">

@@ -65,7 +65,7 @@
                         "<i class=\"bx bx-dots-vertical-rounded\"></i>" +
                         "</button>" +
                         "<div class=\"dropdown-menu\">" +
-                        "<a class=\"dropdown-item\" href=\"javascript:void(0);\"" +
+                        "<a th:href=\"@{/admin/course/{id}/edit(id=${course.id})}\" class=\"dropdown-item\"" +
                         "><i class=\"bx bx-edit-alt me-1\"></i> Редактировать</a" +
                         ">" +
                         "<a onclick=\"showDeleteModal(" + course.id + ")\" class=\"dropdown-item\" " +
@@ -173,18 +173,13 @@
     </div>
 
     <script>
-        // Отображение модального окна с подтверждением удаления курса
         function showDeleteModal(courseId) {
             $('#deleteModal').data('course-id', courseId);
             $('#deleteModal').modal('show');
         }
 
-        // Обработка нажатия на кнопку "Да" в модальном окне
         $('#confirmDelete').click(function() {
             const courseId = $('#deleteModal').data('course-id');
-            // Получаем ID курса из атрибута модального окна
-
-            // Отправляем AJAX-запрос на сервер для удаления курса
             $.ajax({
                 url: '/api/courses/' + courseId,
                 type: 'DELETE',

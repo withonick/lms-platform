@@ -82,6 +82,15 @@ public class UserService implements UserDetailsService {
         return user.getIsPremium();
     }
 
+    public void toggleBan(Long id, boolean banned) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setIsBanned(banned);
+            userRepository.save(user);
+        }
+    }
+
+
     public List<UserDTO> getAllUsersDTO() {
         return userMapper.toUserDTOList(userRepository.findAll());
     }
