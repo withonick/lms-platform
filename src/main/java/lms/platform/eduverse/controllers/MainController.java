@@ -57,14 +57,14 @@ public class MainController {
 
             if (newUser != null){
                 newUser.getPermissions().add(permissionService.userRolePermission());
-                return "redirect:/sign-up?success";
+                return "redirect:/sign-in?success";
             }
             else{
                 return "redirect:/sign-up?error";
             }
         }
         else{
-            return "redirect:/sign-up?error";
+            return "redirect:/sign-up?passwords_mismatch";
         }
     }
 

@@ -38,6 +38,9 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(username);
 
         if (user != null){
+            if (user.getIsBanned()){
+                throw new UsernameNotFoundException("User is banned");
+            }
             return user;
         } else {
             throw new UsernameNotFoundException("User not found");
@@ -61,7 +64,7 @@ public class UserService implements UserDetailsService {
         }
         else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setPermissions(new HashSet<>()); // Инициализация множества permissions
+            user.setPermissions(new HashSet<>());
             Permission userRolePermission = permissionService.userRolePermission();
             user.getPermissions().add(userRolePermission);
             return userRepository.save(user);
@@ -88,6 +91,10 @@ public class UserService implements UserDetailsService {
             user.setIsBanned(banned);
             userRepository.save(user);
         }
+    }
+
+    public boolean isAdmin(User user) {
+        return user.getPermissions().stream().anyMatch(permission -> permission.getRole().equals("ROLE_ADMIN"));
     }
 
 

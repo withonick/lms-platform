@@ -37,7 +37,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                                 class="form-check-input mt-0"
                                 type="checkbox"
                                 aria-label="Checkbox for following text input"
-                                th:if="${course.isPremium()}"
+                                th:if="${course.getIsPremium()}"
                                 checked
                         />
                     </div>
@@ -51,5 +51,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             </div>
         </div>
     </form>
+
+    <script th:src="@{'/js/script.js'}"></script>
 </div>
 </html>

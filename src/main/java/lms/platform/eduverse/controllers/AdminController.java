@@ -62,4 +62,15 @@ public class AdminController {
             throw new NoHandlerFoundException("GET", "/courses/" + id + "/edit", null);
         }
     }
+
+    @PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/tutorials/edit/{id}")
+    public String editTutorial(@PathVariable(name = "id") Long id, Model model) throws NoHandlerFoundException {
+        if (tutorialService.getTutorialById(id) != null) {
+            model.addAttribute("tutorial", tutorialService.getTutorialById(id));
+            return "admin/edit/tutorial";
+        } else {
+            throw new NoHandlerFoundException("GET", "/tutorials/" + id + "/edit", null);
+        }
+    }
 }

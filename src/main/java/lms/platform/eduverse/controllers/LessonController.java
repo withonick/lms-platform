@@ -31,15 +31,30 @@ public class LessonController {
     private final FileStorageService fileStorageService;
 
     @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
+    @GetMapping("/create/{course_id}")
+    public String createLesson(@PathVariable(name = "course_id") Long courseId,
+                               Model model) {
+        Course course = courseService.getCourseById(courseId);
+
+        if (course == null) {
+            return "redirect:/courses?error=course_not_found";
+        }
+
+        model.addAttribute("course", course);
+
+        return "courses/lesson-create";
+    }
+
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
     @PostMapping("/store")
     public String addLesson(@RequestParam(name = "name") String name,
-                              @RequestParam(name = "description") String description,
-                              @RequestParam(name = "video") String image,
-                              @RequestParam(name = "course_id") Long courseId) {
-        try{
+                            @RequestParam(name = "description") String description,
+                            @RequestParam(name = "video") String video,
+                            @RequestParam(name = "course_id") Long courseId) {
+        try {
             Course course = courseService.getCourseById(courseId);
 
-            if(course == null){
+            if (course == null) {
                 return "redirect:/course" + courseId + "/materials/create?error=course_not_found";
             }
 
@@ -48,12 +63,11 @@ public class LessonController {
             lesson.setName(name);
             lesson.setDescription(description);
             lesson.setCourse(course);
-            lesson.setVideo(image);
+            lesson.setVideo(video);
 
             lessonService.saveLesson(lesson);
-
             course.getLessons().add(lesson);
-
+            courseService.saveCourse(course);
         } catch (Exception e) {
             e.printStackTrace();
         }

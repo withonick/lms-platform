@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/admin.html">
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div layout:fragment="content">
+    <form th:action="@{'/tutorials/update'}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:value="${tutorial.id}" name="tutorial_id">
+
+        <div class="row">
+            <div class="col mb-3">
+                <label for="nameBasic" class="form-label">Название курса</label>
+                <input type="text" name="name" id="nameBasic" th:value="${tutorial.getName()}" class="form-control" placeholder="Введите название" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <label for="description" class="form-label">Описание</label>
+                <textarea name="description" class="form-control" id="inp_editor1" style="width: 100%" th:text="${tutorial.getDescription()}"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-3">
+                <label for="dobBasic" class="form-label">Изображение</label>
+                <input type="file" name="image" id="dobBasic" class="form-control" />
+            </div>
+
+        <div class="row">
+            <div class="col mb-3">
+                <button class="btn btn-primary">Обновить</button>
+            </div>
+        </div>
+    </form>
+
+    <script th:src="@{'/js/script.js'}"></script>
+</div>
+</html>

@@ -24,13 +24,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                 <div class="about-course">
                     <h2>О курсе </h2>
 
-                    <p th:utext="${course.getDescription()}"></p>
+                    <p style="color: #fff" th:utext="${course.getDescription()}"></p>
                 </div>
             </div>
 
             <div class="lessons-list">
+                <a sec:authorize="hasAnyRole('ROLE_ADMIN')" style="color: #fff; background: #1a73e8; border: none; outline: none; cursor:pointer; padding: 10px 20px; border-radius: 5px" th:href="@{'/lessons/create/' + ${course.id} }">Добавить урок</a>
                 <h2>Все уроки</h2>
-                <div th:if="${lessons == null or #lists.isEmpty(lessons)}">
+                <div th:if="${lessons == null or #lists.isEmpty(lessons)}" style="margin-top: 10px;">
                     <h3>Уроков пока нет</h3>
                 </div>
 

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/base}">
+xmlns:sec = "http://www.thymeleaf.org/extras/spring-security">
+
+<div layout:fragment="content">
+
+    <form th:action="@{'/lessons/store'}" method="post" enctype="multipart/form-data" class="create-form">
+        <div class="form-group">
+            <input type="hidden" th:value="${course_id}" name="course_id">
+            <label for="name">Название урока</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Название урока">
+        </div>
+        <div class="create-form-group">
+            <label>Course Description</label>
+            <textarea id="inp_editor1" name="description">
+
+            </textarea>
+        </div>
+        <div class="create-form-group">
+            <label for="price">Ссылка на видео (Youtube)</label>
+            <input type="text" class="form-control" id="price" name="video" placeholder="Ссылка на видео">
+        </div>
+        <div class="create-form-group">
+            <button class="create-form-btn">Создать курс</button>
+        </div>
+    </form>
+</div>
+</html>

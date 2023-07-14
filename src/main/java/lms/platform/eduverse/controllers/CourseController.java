@@ -76,7 +76,7 @@ public class CourseController {
         if (courseService.getCourseById(id) != null) {
             Course course = courseService.getCourseById(id);
             if (course.getIsPremium()){
-                if (userService.getCurrentSessionUser().getIsPremium()) {
+                if (userService.getCurrentSessionUser().getIsPremium() || userService.isAdmin(userService.getCurrentSessionUser())) {
                     model.addAttribute("course", course);
                     model.addAttribute("lessons", lessonService.getLessonsByCourseId(id));
                     return "courses/single-course";

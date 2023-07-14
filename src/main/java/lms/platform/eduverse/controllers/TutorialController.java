@@ -92,5 +92,38 @@ public class TutorialController {
         }
     }
 
+    @PostMapping("/update")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public String updateTutorial(@RequestParam(name = "tutorial_id") Long tutorialId,
+                                 @RequestParam(name = "name") String name,
+                                 @RequestParam(name = "description") String description,
+                                 @RequestParam(name = "image") MultipartFile image){
+        try {
+            Tutorial tutorial = tutorialService.getTutorialById(tutorialId);
+
+            tutorial.setName(name);
+            tutorial.setDescription(description);
+
+            if (!image.isEmpty()) {
+                String fileName = fileStorageService.saveFile(image, tutorialsImagesPath);
+                tutorial.setImage(fileName);
+            }
+
+            Tutorial updatedTutorial = tutorialService.saveTutorial(tutorial);
+
+            if (updatedTutorial != null) {
+                return "redirect:/tutorials/" + tutorialId;
+            } else {
+                return "redirect:/tutorials/" + tutorialId + "?error";
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+        return "redirect:/tutorials/" + tutorialId;
+    }
+
 
 }
