@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  backend:
+    image: 'eduverse-docker'
+    container_name: 'eduverse'
+    depends_on:
+      - pgdb
+    environment:
+      - SERVER_PORT=7005
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pgdb:5432/learning
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=false
+    ports:
+      - 8000:7005
+
+  pgdb:
+    image: 'postgres'
+    container_name: 'pg-container'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=learning
+    ports:
+      - 2345:5432
